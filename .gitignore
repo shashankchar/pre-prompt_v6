@@ -1,0 +1,11 @@
+__pycache__/
+*.pyc
+*.pyo
+*.tmp
+*.log
+*.bak
+Thumbs.db
+Desktop.ini
+
+# PowerPoint temporary files
+~$*.pptx

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Prompts Bank</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Prompts Bank</h1>
+      <p>Collection of Powerful Predefined AI Prompts</p>
+    </header>
+
+    <section class="orange-box marquee-wrap" id="heroSection" aria-label="Marquee images">
+      <div class="marquee-track" id="heroTrack">
+        <img src="sketch.jpeg" alt="Pencil sketch studio portrait reference" />
+        <img src="film look.jpeg" alt="Hyper-realistic cinematic film still reference" />
+        <img src="WhatsApp Image 2026-02-26 at 9.06.25 AM.jpeg" alt="Cinematic birthday portrait reference" />
+        <img src="https://picsum.photos/seed/prompt4/420/240" alt="AI sample 4" />
+        <img src="https://picsum.photos/seed/prompt5/420/240" alt="AI sample 5" />
+      </div>
+    </section>
+
+    <h2 class="section-title" id="categoriesTitle">Categories</h2>
+    <section class="categories-row" id="categories"></section>
+
+    <section class="orange-box prompts-panel" id="promptsPanel" aria-label="Prompt list">
+      <div class="prompt-grid" id="promptGrid"></div>
+    </section>
+
+    <section class="detail-view hidden" id="detailView" aria-live="polite">
+      <div class="detail-title">
+        <h2 id="detailTitle"></h2>
+        <p id="detailTagline"></p>
+      </div>
+
+      <div class="orange-box prompt-text-box" id="detailPromptText"></div>
+
+      <div class="action-row">
+        <button class="action-btn" id="copyBtn">Copy Prompt</button>
+        <button class="action-btn" id="backBtn">Back to Prompts</button>
+      </div>
+
+      <h3 class="screenshots-title">Response Screenshot Samples</h3>
+      <div class="screenshots-row" id="screenshotsRow"></div>
+    </section>
+
+    <section class="image-prompts-view hidden" id="imagePromptsView" aria-live="polite">
+      <div class="detail-title">
+        <h2>Image Prompt Section</h2>
+        <p>Click any image card below to copy its related prompt for instant use.</p>
+      </div>
+      <div class="image-prompt-grid" id="imagePromptGrid"></div>
+      <div class="action-row">
+        <button class="action-btn" id="imageBackBtn">Back to Home</button>
+      </div>
+    </section>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
+
+
+
+

@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Prompt Bank - Team Summary with Theory</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 30px;
+      font-family: "Segoe UI", Tahoma, sans-serif;
+      line-height: 1.6;
+      color: #121212;
+      background: #ffffff;
+    }
+    .wrap { max-width: 930px; margin: 0 auto; }
+    h1 { font-size: 34px; margin: 0 0 8px; }
+    h2 {
+      font-size: 24px;
+      margin: 28px 0 10px;
+      border-left: 4px solid #ff5a2f;
+      padding-left: 10px;
+    }
+    h3 { font-size: 18px; margin: 18px 0 8px; color: #1f2a44; }
+    p { margin: 8px 0; }
+    ul, ol { margin: 8px 0 10px 20px; }
+    li { margin: 5px 0; }
+    .muted { color: #5f5f5f; }
+    .box {
+      border: 1px solid #d9d9d9;
+      border-radius: 10px;
+      padding: 14px;
+      background: #fafafa;
+      margin-top: 10px;
+    }
+    .tip {
+      border-left: 5px solid #2e7d32;
+      background: #f2fbf3;
+      padding: 10px 12px;
+      margin-top: 8px;
+    }
+    table { width: 100%; border-collapse: collapse; margin-top: 8px; }
+    th, td { border: 1px solid #d7d7d7; padding: 10px; vertical-align: top; text-align: left; }
+    th { background: #f1f1f1; }
+    .footer {
+      margin-top: 24px;
+      border-top: 1px dashed #c4c4c4;
+      padding-top: 10px;
+      font-size: 13px;
+      color: #666;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>Prompt Bank - Team Summary (Easy + Theory)</h1>
+    <p class="muted">This document is for team members who need quick understanding without deep coding background.</p>
+
+    <h2>1) Project in One Simple Line</h2>
+    <div class="box">
+      <p><strong>Prompt Bank</strong> is a smart prompt library where we can store, search, view, and send prompts directly to PromptTyper software.</p>
+    </div>
+
+    <h2>2) Why We Built This</h2>
+    <div class="box">
+      <ul>
+        <li>Prompts were scattered in notes/files, so reuse was difficult.</li>
+        <li>New prompt add cheyyali ante code lo manual changes needed.</li>
+        <li>PromptTyper software usage fast undali, so direct integration needed.</li>
+      </ul>
+      <div class="tip">
+        <strong>Expected benefit:</strong> Better organization + faster retrieval + no repeated copy mistakes.
+      </div>
+    </div>
+
+    <h2>3) How User Uses It (Non-Technical Flow)</h2>
+    <div class="box">
+      <ol>
+        <li>Website open chestaru -> intro + homepage kanipistundi.</li>
+        <li>Featured posters (Netflix style) lo prompts browse chestaru.</li>
+        <li>Search bar use chesi specific prompt fast ga find chestaru.</li>
+        <li>Prompt open chesi full content chustaru.</li>
+        <li><strong>Save to PromptTyper</strong> click chesthe content software side ki transfer avutundi.</li>
+        <li>User software lo shortcut assign chesukuntadu.</li>
+      </ol>
+    </div>
+
+    <h2>4) Main Features (Team Should Remember)</h2>
+    <div class="box">
+      <h3>A. Cinematic Home Page</h3>
+      <ul>
+        <li>Large poster slider, arrows, dots, auto-slide.</li>
+        <li>Visually engaging UI for quick discovery.</li>
+      </ul>
+
+      <h3>B. Search and Filters</h3>
+      <ul>
+        <li>Search by title, category, tagline, prompt text.</li>
+        <li>Quick filters: All, Pinned, Favorites, Recent.</li>
+      </ul>
+
+      <h3>C. Add Prompt Module</h3>
+      <ul>
+        <li>Required: Title + Prompt content.</li>
+        <li>Optional: Image (for top slider display).</li>
+        <li>Edit/Delete prompts also available.</li>
+      </ul>
+
+      <h3>D. PromptTyper Integration</h3>
+      <ul>
+        <li>Connection status shows active/offline.</li>
+        <li>One click to move prompt content into PromptTyper workflow.</li>
+      </ul>
+    </div>
+
+    <h2>5) Basic Theory (Easy Words)</h2>
+    <div class="box">
+      <h3>5.1 What is a Prompt Library?</h3>
+      <p>Prompt library ante reusable instructions collection. Each prompt is like a tested template. This reduces time and improves output consistency.</p>
+
+      <h3>5.2 Why UI/UX matters in Prompt Systems?</h3>
+      <p>If prompts are not easily discoverable, users won’t reuse them. Good UI (search, categories, featured cards) makes adoption high.</p>
+
+      <h3>5.3 Why Local Integration?</h3>
+      <p>Our PromptTyper already runs in local system. So local API integration is faster, safer, and works without cloud dependency.</p>
+
+      <h3>5.4 Required vs Optional Data Concept</h3>
+      <p><strong>Required:</strong> title + prompt (core knowledge unit). <strong>Optional:</strong> image (visual enhancement only).</p>
+
+      <h3>5.5 Data Persistence Concept</h3>
+      <p>Data persistence means app close/open ayina data loss avvakudadhu. Prompt data is saved through local bridge; user preference flags saved in browser storage.</p>
+    </div>
+
+    <h2>6) Architecture (Simple Table)</h2>
+    <div class="box">
+      <table>
+        <tr>
+          <th>Part</th>
+          <th>Purpose in Simple Words</th>
+        </tr>
+        <tr>
+          <td>Frontend (HTML/CSS/JS)</td>
+          <td>What user sees and clicks: home, search, cards, add form, details.</td>
+        </tr>
+        <tr>
+          <td>PromptTyper Bridge API</td>
+          <td>Local connector between website and Python software.</td>
+        </tr>
+        <tr>
+          <td>Prompt Data Storage</td>
+          <td>Saves prompt list so it stays available next time.</td>
+        </tr>
+        <tr>
+          <td>LocalStorage Meta</td>
+          <td>Saves pin/favorite/recent state for user convenience.</td>
+        </tr>
+      </table>
+    </div>
+
+    <h2>7) Technical Terms -> Easy Meaning</h2>
+    <div class="box">
+      <table>
+        <tr><th>Term</th><th>Easy Meaning</th></tr>
+        <tr><td>Carousel</td><td>Sliding image/poster section.</td></tr>
+        <tr><td>API</td><td>Communication path between two software parts.</td></tr>
+        <tr><td>Bridge</td><td>Connector between web app and PromptTyper.</td></tr>
+        <tr><td>LocalStorage</td><td>Small browser memory to store user preferences.</td></tr>
+        <tr><td>Fallback</td><td>Primary method fail ayithe backup behavior.</td></tr>
+      </table>
+    </div>
+
+    <h2>8) Common Questions Team Might Face</h2>
+    <div class="box">
+      <p><strong>Q:</strong> Is this only design project aa?<br><strong>A:</strong> No. It has UI + data handling + local API integration + workflow automation support.</p>
+      <p><strong>Q:</strong> Image mandatory aa?<br><strong>A:</strong> No. Prompt content important; image optional.</p>
+      <p><strong>Q:</strong> Why no direct shortcut creation?<br><strong>A:</strong> User-specific shortcut decision PromptTyper lo user handle chestadu. We safely transfer content.</p>
+      <p><strong>Q:</strong> If PromptTyper app बंद ఉంటే?<br><strong>A:</strong> Connection status shows offline and save action gives clear feedback.</p>
+    </div>
+
+    <h2>9) Final Team Conclusion</h2>
+    <div class="box">
+      <p>This project converts prompt management from manual chaos to structured reusable workflow. It supports both non-technical users (easy UI) and technical team goals (integration + data reliability). In simple words, <strong>we made prompts discoverable, manageable, and usable in real workflow.</strong></p>
+    </div>
+
+    <div class="footer">
+      Generated on: 2026-04-01 | Purpose: Team reading material (easy summary + theory)
+    </div>
+  </div>
+</body>
+</html>

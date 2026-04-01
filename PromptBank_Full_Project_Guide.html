@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Prompt Bank - Full Project Guide</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 30px;
+      font-family: "Segoe UI", Tahoma, sans-serif;
+      line-height: 1.58;
+      color: #111;
+      background: #fff;
+    }
+    .wrap { max-width: 980px; margin: 0 auto; }
+    h1 { font-size: 34px; margin: 0 0 8px; }
+    h2 { font-size: 24px; margin: 30px 0 10px; border-left: 4px solid #ff5a2f; padding-left: 10px; }
+    h3 { font-size: 18px; margin: 18px 0 8px; color: #1d2d4f; }
+    p { margin: 8px 0; }
+    ul, ol { margin: 8px 0 10px 20px; }
+    li { margin: 5px 0; }
+    .muted { color: #5f5f5f; }
+    .box { border: 1px solid #d8d8d8; border-radius: 10px; padding: 14px; background: #fafafa; margin-top: 10px; }
+    table { width: 100%; border-collapse: collapse; margin-top: 8px; }
+    th, td { border: 1px solid #d7d7d7; padding: 10px; text-align: left; vertical-align: top; }
+    th { background: #f1f1f1; }
+    .footer { margin-top: 24px; border-top: 1px dashed #c4c4c4; padding-top: 10px; font-size: 13px; color: #666; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>Prompt Bank - Full Project Guide</h1>
+    <p class="muted">Complete single-document PDF for team sharing and final presentation.</p>
+
+    <h2>1) Project Summary</h2>
+    <div class="box">
+      <p><strong>Prompt Bank</strong> is a Netflix-style prompt management web app integrated with PromptTyper software. Users can browse, search, add, edit, and reuse prompts quickly, then push selected content directly into PromptTyper.</p>
+      <p>Goal: convert scattered manual prompt handling into structured, reusable workflow.</p>
+    </div>
+
+    <h2>2) Problem and Solution</h2>
+    <div class="box">
+      <h3>Problems</h3>
+      <ul>
+        <li>Prompts stored in random files, difficult to find.</li>
+        <li>New prompt/image add cheyyali ante code changes needed.</li>
+        <li>PromptTyper workflow integration was not direct.</li>
+      </ul>
+      <h3>Solution</h3>
+      <ul>
+        <li>Centralized visual prompt bank with categories and search.</li>
+        <li>Admin form for adding/editing prompts without touching code.</li>
+        <li>Save to PromptTyper integration via local bridge API.</li>
+      </ul>
+    </div>
+
+    <h2>3) End-to-End User Flow</h2>
+    <div class="box">
+      <ol>
+        <li>Open app -> intro overlay + loader + optional intro sound.</li>
+        <li>Home page shows cinematic featured slider.</li>
+        <li>User searches prompts or browses by category/filters.</li>
+        <li>User opens prompt details and copies or saves to PromptTyper.</li>
+        <li>User adds new prompts through Add Prompt form (title + prompt required, image optional).</li>
+        <li>Prompt library saves locally through bridge endpoint.</li>
+      </ol>
+    </div>
+
+    <h2>4) Full Feature List</h2>
+    <div class="box">
+      <ul>
+        <li>Netflix-like hero poster carousel with arrows + dots + auto-slide.</li>
+        <li>Responsive layout for desktop and mobile.</li>
+        <li>Search bar (title/category/tagline/prompt content).</li>
+        <li>Category section and quick filters: All, Pinned, Favorites, Recent.</li>
+        <li>Prompt detail page with copy action and sample screenshots.</li>
+        <li>Image prompt section with copy/save actions.</li>
+        <li>Admin module: add/edit/delete prompt entries.</li>
+        <li>PromptTyper connection status indicator.</li>
+        <li>Save to PromptTyper handoff action.</li>
+        <li>Intro sound segment control with fade-in/fade-out and tap fallback.</li>
+      </ul>
+    </div>
+
+    <h2>5) Architecture</h2>
+    <div class="box">
+      <table>
+        <tr><th>Layer</th><th>Technology</th><th>Responsibility</th></tr>
+        <tr><td>UI Structure</td><td>HTML</td><td>Hero, search, prompt list, detail views, admin form layout.</td></tr>
+        <tr><td>Visual Design</td><td>CSS</td><td>Cinematic styling, spacing, animations, responsive behavior.</td></tr>
+        <tr><td>App Logic</td><td>Vanilla JavaScript</td><td>Rendering, filters, slider logic, CRUD, intro flow, API calls.</td></tr>
+        <tr><td>Integration Layer</td><td>Local HTTP Bridge</td><td>Health check, prompt data load/save, import into PromptTyper.</td></tr>
+        <tr><td>State Persistence</td><td>Bridge JSON + localStorage</td><td>Prompt library + user meta states (pin/favorite/recent).</td></tr>
+      </table>
+    </div>
+
+    <h2>6) Important Data Model</h2>
+    <div class="box">
+      <p><strong>Prompt Object:</strong></p>
+      <p><code>{ id, title, category, tagline, prompt, images[], mainImage, featuredInSlider }</code></p>
+      <p><strong>User Meta Object:</strong></p>
+      <p><code>{ pinned, favorite, lastOpenedAt }</code></p>
+      <p>Design rule: Title + Prompt mandatory; image optional.</p>
+    </div>
+
+    <h2>7) API Endpoints Used</h2>
+    <div class="box">
+      <table>
+        <tr><th>Endpoint</th><th>Method</th><th>Purpose</th></tr>
+        <tr><td><code>/health</code></td><td>GET</td><td>Checks if PromptTyper bridge is running.</td></tr>
+        <tr><td><code>/prompt-bank-data</code></td><td>GET</td><td>Loads existing prompt library.</td></tr>
+        <tr><td><code>/prompt-bank-data</code></td><td>POST</td><td>Saves prompt library updates.</td></tr>
+        <tr><td><code>/import-prompt</code></td><td>POST</td><td>Sends selected prompt content to PromptTyper manage flow.</td></tr>
+      </table>
+    </div>
+
+    <h2>8) Core Modules Explained</h2>
+    <div class="box">
+      <h3>Home + Hero Slider Module</h3>
+      <p>Shows featured prompts as large cards. Handles smooth transitions, auto-play timing, arrow navigation, and dot indicator sync.</p>
+
+      <h3>Search + Filtering Module</h3>
+      <p>Filters prompt list in real time using query match across multiple text fields. Supports category and quick-filter combinations.</p>
+
+      <h3>Detail Action Module</h3>
+      <p>Opens full prompt text view, supports copy, pin/favorite toggles, and handoff to PromptTyper.</p>
+
+      <h3>Admin Management Module</h3>
+      <p>Lets users create/update/delete prompts. Validates required fields and supports optional poster image uploads.</p>
+
+      <h3>Bridge Connectivity Module</h3>
+      <p>Monitors local app availability and performs read/write/import operations through fetch calls with timeout handling.</p>
+    </div>
+
+    <h2>9) Intro Audio Logic</h2>
+    <div class="box">
+      <ul>
+        <li>Audio file loaded from local mp3.</li>
+        <li>Configured segment playback from 5 sec to 10 sec.</li>
+        <li>Fade-in and fade-out added for smoothness.</li>
+        <li>If browser blocks autoplay, overlay shows tap fallback message.</li>
+      </ul>
+    </div>
+
+    <h2>10) Major Issues Faced and Fixes</h2>
+    <div class="box">
+      <table>
+        <tr><th>Issue</th><th>Fix</th></tr>
+        <tr><td>Page showed HTML only (no style)</td><td>Corrected stylesheet link/structure and style implementation.</td></tr>
+        <tr><td>Slider position drifting right over time</td><td>Stabilized slide step and transform calculations.</td></tr>
+        <tr><td>"Failed to fetch" during prompt operations</td><td>Added bridge health checks, timeout wrapper, and user feedback.</td></tr>
+        <tr><td>Top layout wasted space</td><td>Adjusted hero height, removed extra menu element, optimized alignment.</td></tr>
+        <tr><td>Autoplay inconsistent across browsers</td><td>Added fallback tap-to-play behavior while preserving intro flow.</td></tr>
+      </table>
+    </div>
+
+    <h2>11) Validation and Testing Checklist</h2>
+    <div class="box">
+      <ol>
+        <li>Homepage loads with hero visuals and no layout jump.</li>
+        <li>Slider auto and manual navigation works correctly.</li>
+        <li>Search query filters expected cards.</li>
+        <li>Add prompt works for both text-only and text+image cases.</li>
+        <li>Edit/Delete actions reflect in saved list.</li>
+        <li>Save to PromptTyper works when bridge active.</li>
+        <li>Offline state displays proper connection message.</li>
+        <li>Pinned/Favorite/Recent filters behave correctly after refresh.</li>
+      </ol>
+    </div>
+
+    <h2>12) Limitations</h2>
+    <div class="box">
+      <ul>
+        <li>Local system dependent; no cloud sync currently.</li>
+        <li>Autoplay behavior depends on browser media policy.</li>
+        <li>No user login/roles in current version.</li>
+      </ul>
+    </div>
+
+    <h2>13) Future Scope</h2>
+    <div class="box">
+      <ul>
+        <li>Cloud database + account-based sync.</li>
+        <li>Tag analytics and usage ranking dashboard.</li>
+        <li>Bulk import/export prompts (CSV/JSON).</li>
+        <li>Role-based team collaboration and approval workflow.</li>
+      </ul>
+    </div>
+
+    <h2>14) Viva / Review Ready Answers</h2>
+    <div class="box">
+      <p><strong>Why this project?</strong> To make prompt workflows practical, fast, and reusable for real productivity.</p>
+      <p><strong>Why optional image?</strong> Core value is prompt text; image improves discoverability only.</p>
+      <p><strong>Why local bridge?</strong> Existing PromptTyper is local Python software; bridge gives controlled direct integration.</p>
+      <p><strong>What makes this complete?</strong> UI + data + persistence + integration + user feedback + error handling are all covered.</p>
+    </div>
+
+    <h2>15) Final Conclusion</h2>
+    <div class="box">
+      <p>Prompt Bank is a full workflow product, not just a frontend demo. It solves prompt organization, discovery, and execution handoff to PromptTyper in one system. The project now supports practical daily usage with clear extension path for cloud/team scale.</p>
+    </div>
+
+    <div class="footer">
+      Generated on: 2026-04-01 | Complete Prompt Bank documentation PDF source.
+    </div>
+  </div>
+</body>
+</html>

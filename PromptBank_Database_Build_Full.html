@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Prompt Bank - Database Build Document</title>
+  <style>
+    body { margin: 0; padding: 30px; font-family: "Segoe UI", Tahoma, sans-serif; color: #111; background: #fff; line-height: 1.58; }
+    .wrap { max-width: 980px; margin: 0 auto; }
+    h1 { margin: 0 0 8px; font-size: 34px; }
+    h2 { margin: 28px 0 10px; font-size: 24px; border-left: 4px solid #ff5a2f; padding-left: 10px; }
+    h3 { margin: 18px 0 8px; font-size: 18px; color: #1d2d4f; }
+    p { margin: 8px 0; }
+    ul, ol { margin: 8px 0 10px 20px; }
+    li { margin: 5px 0; }
+    .box { border: 1px solid #d9d9d9; background: #fafafa; border-radius: 10px; padding: 14px; margin-top: 10px; }
+    .muted { color: #666; }
+    code { background: #f1f1f1; border: 1px solid #dfdfdf; border-radius: 6px; padding: 1px 6px; font-family: Consolas, monospace; }
+    table { width: 100%; border-collapse: collapse; margin-top: 8px; }
+    th, td { border: 1px solid #d8d8d8; padding: 10px; text-align: left; vertical-align: top; }
+    th { background: #f1f1f1; }
+    pre { margin: 0; white-space: pre-wrap; background: #f8f8f8; border: 1px solid #ddd; border-radius: 8px; padding: 10px; }
+    .footer { margin-top: 24px; border-top: 1px dashed #c7c7c7; padding-top: 10px; font-size: 13px; color: #666; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>Prompt Bank Database - How We Built It</h1>
+    <p class="muted">Complete database-focused PDF content (easy + technical mixed).</p>
+
+    <h2>1) Database Approach We Selected</h2>
+    <div class="box">
+      <p>We used a <strong>local JSON-based database model</strong> through PromptTyper local bridge API.</p>
+      <p>Main data file: <code>prompt_bank_data.json</code></p>
+      <p>Reason: fast local setup, no cloud dependency, easy integration with existing Python tool.</p>
+    </div>
+
+    <h2>2) Why We Chose Local JSON DB First</h2>
+    <div class="box">
+      <ul>
+        <li>Project is local laptop based and PromptTyper already runs locally.</li>
+        <li>No user login requirement in current version.</li>
+        <li>Offline support needed.</li>
+        <li>Implementation speed high (good for rapid product iteration).</li>
+      </ul>
+    </div>
+
+    <h2>3) Data Layers in This Project</h2>
+    <div class="box">
+      <table>
+        <tr><th>Layer</th><th>Storage</th><th>What it keeps</th></tr>
+        <tr><td>Main Prompt Data</td><td><code>prompt_bank_data.json</code></td><td>All prompts, title, category, prompt text, images, featured flag.</td></tr>
+        <tr><td>Client Meta Data</td><td><code>localStorage</code> key <code>prompt_bank_meta_v1</code></td><td>Pin/Favorite/Recent status per prompt.</td></tr>
+        <tr><td>Fallback Seed Data</td><td><code>fallbackPromptData</code> in <code>script.js</code></td><td>Default prompts if bridge/storage is unavailable.</td></tr>
+      </table>
+    </div>
+
+    <h2>4) Core Prompt Schema</h2>
+    <div class="box">
+      <p>Each prompt row/object follows this structure:</p>
+      <pre>{
+  "id": "app-feature-spec",
+  "title": "App Feature Spec Prompt",
+  "category": "App Development",
+  "tagline": "Use this prompt to define one app feature...",
+  "prompt": "Act as a senior product manager...",
+  "images": ["https://.../image.jpg" or "data:image/...base64,..."],
+  "mainImage": "first image",
+  "featuredInSlider": true
+}</pre>
+      <p><strong>Validation rule:</strong> title and prompt mandatory; image optional.</p>
+    </div>
+
+    <h2>5) How Data Is Normalized</h2>
+    <div class="box">
+      <p>Function: <code>normalizePrompt(item, index)</code></p>
+      <ul>
+        <li>Creates safe ID from title if ID missing.</li>
+        <li>Ensures category default is <code>General</code>.</li>
+        <li>Builds <code>images[]</code> list and ensures <code>mainImage</code> exists in list.</li>
+        <li>Standardizes <code>featuredInSlider</code> boolean.</li>
+      </ul>
+      <p>This step guarantees DB consistency even if input payload varies.</p>
+    </div>
+
+    <h2>6) Bridge API Design (Database Access Layer)</h2>
+    <div class="box">
+      <table>
+        <tr><th>Endpoint</th><th>Method</th><th>DB Action</th></tr>
+        <tr><td><code>/health</code></td><td>GET</td><td>Check bridge status before DB operations.</td></tr>
+        <tr><td><code>/prompt-bank-data</code></td><td>GET</td><td>Read all prompt records from local DB file.</td></tr>
+        <tr><td><code>/prompt-bank-data</code></td><td>POST</td><td>Write/replace prompt records in local DB file.</td></tr>
+        <tr><td><code>/import-prompt</code></td><td>POST</td><td>Insert selected prompt content into PromptTyper flow.</td></tr>
+      </table>
+    </div>
+
+    <h2>7) Load and Save Flow (Step-by-Step)</h2>
+    <div class="box">
+      <h3>Load Flow</h3>
+      <ol>
+        <li>UI starts -> calls <code>loadPromptLibrary()</code>.</li>
+        <li>GET <code>/prompt-bank-data</code> from bridge.</li>
+        <li>Payload prompts -> <code>normalizePrompt()</code>.</li>
+        <li>If API fails, fallback seeds are loaded.</li>
+      </ol>
+      <h3>Save Flow</h3>
+      <ol>
+        <li>User adds/edits/deletes prompt in admin form.</li>
+        <li>UI updates in-memory <code>promptData</code>.</li>
+        <li>POST <code>/prompt-bank-data</code> with full prompt array.</li>
+        <li>Bridge persists JSON to local DB file.</li>
+      </ol>
+    </div>
+
+    <h2>8) Image Storage Strategy</h2>
+    <div class="box">
+      <p>Project supports two image forms:</p>
+      <ul>
+        <li><strong>File path / URL</strong> (lightweight)</li>
+        <li><strong>Base64 data URL</strong> (self-contained but heavy size)</li>
+      </ul>
+      <p>Because of base64 image entries, DB file size can become large (for example 1GB risk if many heavy images).</p>
+      <p>Recommendation: keep DB text-focused, and store images in separate folder paths (or object storage in future).</p>
+    </div>
+
+    <h2>9) Meta Data Model (Client-side)</h2>
+    <div class="box">
+      <p>In browser localStorage, key: <code>prompt_bank_meta_v1</code></p>
+      <pre>{
+  "prompt-id-1": { "pinned": true, "favorite": false, "lastOpenedAt": 171... },
+  "prompt-id-2": { "pinned": false, "favorite": true, "lastOpenedAt": 171... }
+}</pre>
+      <p>This is separated from main DB to keep business data clean and user preference flexible.</p>
+    </div>
+
+    <h2>10) Error Handling in DB Layer</h2>
+    <div class="box">
+      <ul>
+        <li><code>fetchWithTimeout()</code> avoids hanging API calls.</li>
+        <li>Health check updates UI status: active / app not running.</li>
+        <li>If save fails, user sees explicit failure status instead of silent break.</li>
+        <li>Fallback data prevents blank UI when bridge unavailable.</li>
+      </ul>
+    </div>
+
+    <h2>11) What We Built Well in Database Design</h2>
+    <div class="box">
+      <ul>
+        <li>Simple and maintainable schema.</li>
+        <li>Clear separation: prompt content vs user UI preferences.</li>
+        <li>Bridge-based access control (UI never writes random files directly).</li>
+        <li>Supports both text-only and image+text records.</li>
+      </ul>
+    </div>
+
+    <h2>12) Current Limitations</h2>
+    <div class="box">
+      <ul>
+        <li>No relational indexing (JSON scan-based filtering).</li>
+        <li>No multi-user concurrency controls.</li>
+        <li>Large base64 images can inflate DB file size.</li>
+        <li>No version history/audit log yet.</li>
+      </ul>
+    </div>
+
+    <h2>13) Next Upgrade Path (If We Move to Real DB)</h2>
+    <div class="box">
+      <h3>Option A - SQLite (Local, lightweight, best next step)</h3>
+      <ul>
+        <li>Tables: prompts, prompt_images, prompt_meta, activity_log.</li>
+        <li>Fast query + smaller storage + better integrity.</li>
+      </ul>
+      <h3>Option B - PostgreSQL/MySQL (Team/Cloud scale)</h3>
+      <ul>
+        <li>Multi-user, auth, backup, role-based management.</li>
+      </ul>
+      <h3>Image Best Practice</h3>
+      <ul>
+        <li>Store image file paths in DB, not raw base64 blob for large scale.</li>
+      </ul>
+    </div>
+
+    <h2>14) Quick Viva Answers (Database Specific)</h2>
+    <div class="box">
+      <p><strong>Q: Is this a real DB?</strong><br />A: Yes, current implementation is a local JSON document database pattern through API bridge.</p>
+      <p><strong>Q: Why not SQL first?</strong><br />A: Project priority was local speed and integration with existing Python software. JSON gave faster deployment.</p>
+      <p><strong>Q: How do you ensure record consistency?</strong><br />A: Normalization function standardizes fields before render/save.</p>
+      <p><strong>Q: How can it scale?</strong><br />A: Move same API contract to SQLite/Postgres with minimal UI changes.</p>
+    </div>
+
+    <h2>15) Final Database Conclusion</h2>
+    <div class="box">
+      <p>Prompt Bank database was built as a practical local-first system: reliable for current single-user workflow, simple to operate, and ready for structured upgrade to SQL when scale increases.</p>
+    </div>
+
+    <div class="footer">
+      Generated on: 2026-04-01 | Database build document for Prompt Bank project.
+    </div>
+  </div>
+</body>
+</html>

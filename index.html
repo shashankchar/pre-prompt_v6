@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Prompts Bank</title>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <audio id="introAudio" preload="auto" autoplay playsinline>
+    <source src="./where-is-my-mind-fightclub.mp3" type="audio/mpeg" />
+  </audio>
+  <div class="intro-overlay" id="introOverlay" aria-live="polite">
+    <div class="intro-center">
+      <p class="intro-kicker">Prompt Streaming Library</p>
+      <h1 class="intro-title">Prompts Bank</h1>
+      <p class="intro-status" id="introStatus">Loading visual library...</p>
+    </div>
+  </div>
+  <div class="container">
+    <header>
+      <p class="eyebrow">Prompt Streaming Library</p>
+      <div class="title-row">
+        <h1>Prompts Bank</h1>
+        <div class="title-tools">
+          <p class="bridge-status" id="bridgeStatus">PromptTyper connection: checking...</p>
+        </div>
+      </div>
+      <button class="hero-btn hidden" id="closeAdminBtn" type="button">Back to Home</button>
+    </header>
+
+    <section class="hero-shell" id="heroSection" aria-label="Featured prompts">
+      <div class="hero-copy">
+        <form class="search-panel" id="searchForm" role="search">
+          <label class="search-label" for="searchInput">Search prompts</label>
+          <div class="search-row">
+            <input
+              class="search-input"
+              id="searchInput"
+              type="search"
+              placeholder="Search title, category, or prompt..."
+              autocomplete="off"
+            />
+            <button class="search-clear hidden" id="searchClearBtn" type="button">Clear</button>
+          </div>
+        </form>
+        <p class="hero-kicker" id="heroKicker">Featured Prompt</p>
+        <h2 id="heroHeadline">Netflix-style AI prompt showcase</h2>
+        <p class="hero-description" id="heroDescription">Large cinematic posters, smooth sliding motion, and interactive prompt previews.</p>
+        <div class="hero-actions">
+          <button class="hero-btn hero-btn-primary" id="heroOpenBtn" type="button">Open Prompt</button>
+          <button class="hero-btn" id="heroBrowseBtn" type="button">Browse Categories</button>
+        </div>
+      </div>
+
+      <div class="hero-carousel">
+        <button class="hero-nav hero-nav-left" id="heroPrevBtn" type="button" aria-label="Previous slide">&#8249;</button>
+        <div class="hero-viewport">
+          <div class="hero-track" id="heroTrack"></div>
+        </div>
+        <button class="hero-nav hero-nav-right" id="heroNextBtn" type="button" aria-label="Next slide">&#8250;</button>
+        <div class="hero-dots" id="heroDots" aria-label="Hero slider dots"></div>
+      </div>
+    </section>
+
+    <h2 class="section-title" id="categoriesTitle">Categories</h2>
+    <section class="categories-row" id="categories"></section>
+    <section class="quick-filters" id="quickFilters" aria-label="Quick filters">
+      <button class="quick-filter active" type="button" data-quick-filter="all">All Prompts</button>
+      <button class="quick-filter" type="button" data-quick-filter="pinned">Pinned</button>
+      <button class="quick-filter" type="button" data-quick-filter="favorites">Favorites</button>
+      <button class="quick-filter" type="button" data-quick-filter="recent">Recent</button>
+    </section>
+
+    <section class="orange-box prompts-panel" id="promptsPanel" aria-label="Prompt list">
+      <div class="prompt-grid" id="promptGrid"></div>
+    </section>
+
+    <section class="detail-view hidden" id="detailView" aria-live="polite">
+      <div class="detail-title">
+        <h2 id="detailTitle"></h2>
+        <p id="detailTagline"></p>
+      </div>
+
+      <div class="orange-box prompt-text-box" id="detailPromptText"></div>
+
+      <div class="action-row">
+        <button class="action-btn action-btn-secondary" id="togglePinBtn">Pin</button>
+        <button class="action-btn action-btn-secondary" id="toggleFavoriteBtn">Favorite</button>
+        <button class="action-btn" id="copyBtn">Copy Prompt</button>
+        <button class="action-btn action-btn-secondary" id="saveToPromptTyperBtn">Save to PromptTyper</button>
+        <button class="action-btn" id="backBtn">Back to Prompts</button>
+      </div>
+
+      <h3 class="screenshots-title">Response Screenshot Samples</h3>
+      <div class="screenshots-row" id="screenshotsRow"></div>
+    </section>
+
+    <section class="image-prompts-view hidden" id="imagePromptsView" aria-live="polite">
+      <div class="detail-title">
+        <h2>Image Prompt Section</h2>
+        <p>Click any image card below to copy its related prompt for instant use.</p>
+      </div>
+      <div class="image-prompt-grid" id="imagePromptGrid"></div>
+      <div class="action-row">
+        <button class="action-btn" id="imageBackBtn">Back to Home</button>
+      </div>
+    </section>
+
+    <section class="admin-view hidden" id="adminView" aria-live="polite">
+      <div class="detail-title">
+        <h2>Prompt Bank Admin</h2>
+        <p>Create title + prompt items, and optionally add an image for slider visibility.</p>
+      </div>
+
+      <div class="admin-layout">
+        <section class="orange-box admin-panel">
+          <h3 class="admin-heading">Add Or Edit Prompt</h3>
+          <form id="adminForm" class="admin-form">
+            <input type="hidden" id="adminPromptId" />
+
+            <label class="admin-label" for="adminTitle">Title</label>
+            <input class="admin-input" id="adminTitle" type="text" required />
+
+            <label class="admin-label" for="adminCategory">Category</label>
+            <input class="admin-input" id="adminCategory" type="text" placeholder="Education, Filmmaking, Content Writing" />
+
+            <label class="admin-label" for="adminTagline">Tagline</label>
+            <input class="admin-input" id="adminTagline" type="text" placeholder="Short description for card and details view" />
+
+            <label class="admin-label" for="adminPrompt">Prompt</label>
+            <textarea class="admin-textarea" id="adminPrompt" required></textarea>
+
+            <label class="admin-label" for="adminImage">Poster Image</label>
+            <input class="admin-input" id="adminImage" type="file" accept="image/*" />
+            <p class="admin-help">Optional. Only prompts with an image can appear in the top slider.</p>
+
+            <label class="admin-checkbox">
+              <input id="adminFeatured" type="checkbox" />
+              <span>Show in top slider when image is available</span>
+            </label>
+
+            <div class="admin-preview hidden" id="adminImagePreviewWrap">
+              <img id="adminImagePreview" alt="Selected poster preview" />
+            </div>
+
+            <div class="action-row">
+              <button class="action-btn" type="submit" id="adminSaveBtn">Save Prompt</button>
+              <button class="action-btn action-btn-secondary" type="button" id="adminResetBtn">Clear Form</button>
+            </div>
+            <p class="admin-status" id="adminStatus"></p>
+          </form>
+        </section>
+
+        <section class="orange-box admin-panel">
+          <h3 class="admin-heading">Saved Prompts</h3>
+          <div class="admin-list" id="adminList"></div>
+        </section>
+      </div>
+    </section>
+
+    <section class="bottom-tools" aria-label="Bottom actions">
+      <button class="hero-btn hero-btn-primary" id="openAdminBtn" type="button">Add Prompt</button>
+    </section>
+  </div>
+
+  <script src="./script.js"></script>
+</body>
+</html>

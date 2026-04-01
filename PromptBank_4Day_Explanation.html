@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Prompt Bank - 4 Day Project Explanation Guide</title>
+  <style>
+    :root {
+      --bg: #0a0a0f;
+      --card: #12131a;
+      --text: #f4f5f7;
+      --muted: #b3b6c2;
+      --accent: #ff5b2e;
+      --accent2: #00b2ff;
+      --border: #2b2e3a;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 32px;
+      background: radial-gradient(circle at 20% 10%, #2b0900 0%, #0a0a0f 42%, #080b12 100%);
+      color: var(--text);
+      font: 15px/1.55 "Segoe UI", Tahoma, sans-serif;
+    }
+    .wrap { max-width: 980px; margin: 0 auto; }
+    h1, h2, h3 { margin: 0 0 10px; line-height: 1.2; }
+    h1 { font-size: 36px; }
+    h2 {
+      margin-top: 28px;
+      font-size: 25px;
+      border-left: 4px solid var(--accent);
+      padding-left: 10px;
+    }
+    h3 { margin-top: 18px; font-size: 19px; color: #ffd7cb; }
+    p { margin: 8px 0; color: var(--text); }
+    .muted { color: var(--muted); }
+    .card {
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0));
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 18px;
+      margin-top: 14px;
+    }
+    ul, ol { margin: 8px 0 8px 20px; }
+    li { margin: 6px 0; }
+    .pill {
+      display: inline-block;
+      border: 1px solid #3d4254;
+      border-radius: 999px;
+      padding: 4px 10px;
+      margin-right: 8px;
+      margin-top: 8px;
+      color: #dce7ff;
+      font-size: 13px;
+      background: rgba(0, 178, 255, 0.08);
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    .day {
+      border: 1px solid #3b2a22;
+      border-radius: 12px;
+      padding: 14px;
+      background: rgba(255, 91, 46, 0.08);
+    }
+    code {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 6px;
+      padding: 1px 6px;
+      font-family: Consolas, "Courier New", monospace;
+      font-size: 13px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 8px;
+      font-size: 14px;
+    }
+    th, td {
+      border: 1px solid var(--border);
+      padding: 10px;
+      vertical-align: top;
+    }
+    th {
+      background: rgba(0,0,0,0.25);
+      text-align: left;
+    }
+    .footer {
+      margin-top: 28px;
+      padding-top: 14px;
+      border-top: 1px dashed #3a3e4f;
+      color: var(--muted);
+      font-size: 13px;
+    }
+    @media print {
+      body { background: #fff; color: #111; padding: 20px; }
+      .card, .day { background: #fff; border-color: #bbb; }
+      h2 { border-color: #333; }
+      .muted, .footer { color: #333; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>Prompt Bank + PromptTyper Integration</h1>
+    <p class="muted"><strong>4-Day Complete Explanation PDF Guide</strong> | Prepared for project presentation and viva.</p>
+    <div>
+      <span class="pill">Frontend: HTML + CSS + JavaScript</span>
+      <span class="pill">Bridge API: Localhost 127.0.0.1:8765</span>
+      <span class="pill">Storage: Local JSON + LocalStorage</span>
+      <span class="pill">Theme: Netflix-style prompt showcase</span>
+    </div>
+
+    <h2>1) Project Goal (Simple Explanation)</h2>
+    <div class="card">
+      <p>This project is a <strong>cinematic Prompt Bank web app</strong> that lets user browse prompts like a streaming platform, then directly send selected prompt content into existing Python software <strong>PromptTyper</strong>.</p>
+      <p>Core idea: User should not manually edit code every time. They can add prompt (title + text, optional image), search, filter, preview, and push to PromptTyper content box for shortcut mapping.</p>
+    </div>
+
+    <h2>2) End-to-End User Flow</h2>
+    <div class="card">
+      <ol>
+        <li>Open web app -> cinematic intro loads (image preload + intro sound segment).</li>
+        <li>User sees hero slider with big posters and dot navigation.</li>
+        <li>User searches prompt or browses categories / quick filters.</li>
+        <li>User opens prompt detail -> can copy or click <code>Save to PromptTyper</code>.</li>
+        <li>App sends prompt to local PromptTyper bridge API.</li>
+        <li>User is redirected/opened in PromptTyper manage flow and sets shortcut there.</li>
+      </ol>
+    </div>
+
+    <h2>3) Technical Architecture</h2>
+    <div class="card">
+      <table>
+        <tr><th>Layer</th><th>What It Does</th></tr>
+        <tr><td>UI Layer (<code>index.html</code>)</td><td>Hero slider, search, categories, detail view, image prompts view, admin form, PromptTyper status line.</td></tr>
+        <tr><td>Style Layer (<code>styles.css</code>)</td><td>Netflix-like visuals, responsive layout, carousel styling, intro overlay animations, admin panel style.</td></tr>
+        <tr><td>Logic Layer (<code>script.js</code>)</td><td>Data normalization, rendering, slider engine, search/filtering, admin CRUD, intro handling, bridge API calls.</td></tr>
+        <tr><td>Bridge API</td><td><code>/health</code>, <code>/prompt-bank-data</code> (GET/POST), <code>/import-prompt</code> for PromptTyper injection.</td></tr>
+        <tr><td>Persistence</td><td>Prompt library via JSON through bridge; UI states (pin/favorite/recent) in browser <code>localStorage</code>.</td></tr>
+      </table>
+    </div>
+
+    <h2>4) Key Features You Should Explain</h2>
+    <div class="card">
+      <h3>A. Cinematic Intro</h3>
+      <ul>
+        <li>Intro overlay preloads images to avoid blank flashes.</li>
+        <li>Audio segment is controlled (start at 5s, stop at 10s).</li>
+        <li>Fade-in and fade-out applied for smooth sound transition.</li>
+        <li>If autoplay is blocked, fallback message: <code>Tap anywhere to play intro...</code>.</li>
+      </ul>
+
+      <h3>B. Netflix-style Hero Carousel</h3>
+      <ul>
+        <li>Large poster cards with center focus effect.</li>
+        <li>Auto-slide + manual prev/next arrows + active dots.</li>
+        <li>Stable slide transform logic to avoid progressive right drift bug.</li>
+      </ul>
+
+      <h3>C. Prompt Discovery</h3>
+      <ul>
+        <li>Search on title/category/tagline/prompt content.</li>
+        <li>Category filters + quick filters: All, Pinned, Favorites, Recent.</li>
+        <li>Prompt detail view with copy action and screenshot previews.</li>
+      </ul>
+
+      <h3>D. Admin: Add Prompt (Main Feature)</h3>
+      <ul>
+        <li>Required: title + prompt text.</li>
+        <li>Optional: image (if present, can be featured in top slider).</li>
+        <li>Edit/Delete support from saved prompts list.</li>
+        <li>Image preview before save.</li>
+      </ul>
+
+      <h3>E. PromptTyper Integration</h3>
+      <ul>
+        <li>Top status: active / app not running.</li>
+        <li><code>Save to PromptTyper</code> sends selected content to Python tool through local API.</li>
+        <li>This avoids direct auto-shortcut creation; user sets shortcut safely in PromptTyper manage section.</li>
+      </ul>
+    </div>
+
+    <h2>5) Important Data Structures</h2>
+    <div class="card">
+      <p><strong>Prompt Object</strong>:</p>
+      <p><code>{ id, title, category, tagline, prompt, images[], mainImage, featuredInSlider }</code></p>
+      <p><strong>Meta State (localStorage)</strong>:</p>
+      <p><code>{ pinned, favorite, lastOpenedAt }</code></p>
+    </div>
+
+    <h2>6) API Contract Summary (What to Tell Evaluator)</h2>
+    <div class="card">
+      <table>
+        <tr><th>Endpoint</th><th>Method</th><th>Purpose</th></tr>
+        <tr><td><code>/health</code></td><td>GET</td><td>Checks PromptTyper bridge availability and updates connection badge.</td></tr>
+        <tr><td><code>/prompt-bank-data</code></td><td>GET</td><td>Loads saved prompts from local storage managed by Python bridge.</td></tr>
+        <tr><td><code>/prompt-bank-data</code></td><td>POST</td><td>Saves updated prompt library after add/edit/delete operations.</td></tr>
+        <tr><td><code>/import-prompt</code></td><td>POST</td><td>Sends selected prompt into PromptTyper workflow (content transfer).</td></tr>
+      </table>
+    </div>
+
+    <h2>7) Major Problems Faced + Fixes</h2>
+    <div class="card">
+      <ul>
+        <li><strong>Only HTML visible, no styling:</strong> fixed CSS linking and structured layout.</li>
+        <li><strong>Slider drift right issue:</strong> corrected stable width/step based transform logic.</li>
+        <li><strong>Failed to fetch while adding prompt:</strong> added robust bridge checks and status feedback.</li>
+        <li><strong>Autoplay restrictions:</strong> added fallback user gesture prompt for audio play.</li>
+        <li><strong>Layout spacing wastage:</strong> refined hero/search/title alignment and removed unnecessary top controls.</li>
+      </ul>
+    </div>
+
+    <h2>8) 4-Day Preparation Plan (What to Study and Practice)</h2>
+    <div class="grid">
+      <div class="day">
+        <h3>Day 1 - Project Story + UI Tour</h3>
+        <ul>
+          <li>Explain project objective and real user problem.</li>
+          <li>Show homepage: intro, slider, search, categories.</li>
+          <li>Practice 2-minute demo without coding terms.</li>
+        </ul>
+      </div>
+      <div class="day">
+        <h3>Day 2 - Technical Architecture</h3>
+        <ul>
+          <li>Explain file roles: HTML/CSS/JS + bridge API.</li>
+          <li>Explain data flow from UI to PromptTyper.</li>
+          <li>Practice endpoints and error handling explanation.</li>
+        </ul>
+      </div>
+      <div class="day">
+        <h3>Day 3 - Live Demo + Edge Cases</h3>
+        <ul>
+          <li>Run add/edit/delete prompt live.</li>
+          <li>Show with image and without image cases.</li>
+          <li>Show PromptTyper offline and online behavior.</li>
+        </ul>
+      </div>
+      <div class="day">
+        <h3>Day 4 - Viva Questions + Final Rehearsal</h3>
+        <ul>
+          <li>Practice probable viva Q&A (below section).</li>
+          <li>Keep a backup explanation for autoplay/browser limits.</li>
+          <li>Do one full timed presentation (8-12 minutes).</li>
+        </ul>
+      </div>
+    </div>
+
+    <h2>9) Viva Q&A (Ready Answers)</h2>
+    <div class="card">
+      <p><strong>Q:</strong> Why local bridge API instead of direct DB in browser?<br />
+         <strong>A:</strong> We need integration with existing Python software (PromptTyper). Local bridge allows controlled read/write and direct handoff.</p>
+      <p><strong>Q:</strong> Why title+prompt mandatory and image optional?<br />
+         <strong>A:</strong> Core text prompt must always exist. Image is only for visual presentation and slider listing.</p>
+      <p><strong>Q:</strong> How do you handle browser autoplay blocks?<br />
+         <strong>A:</strong> Autoplay is attempted first, and if blocked we show tap fallback. This aligns with browser media security policy.</p>
+      <p><strong>Q:</strong> How is user data persisted?<br />
+         <strong>A:</strong> Prompt library through bridge endpoint; quick user flags like pinned/favorite/recent in localStorage.</p>
+      <p><strong>Q:</strong> Biggest improvement if next version?<br />
+         <strong>A:</strong> Add authentication + multi-user profile + cloud sync + searchable tags and analytics dashboard.</p>
+    </div>
+
+    <h2>10) 3-Minute Closing Script (Use in Final Presentation)</h2>
+    <div class="card">
+      <p>"This project transforms a static prompt list into a cinematic, manageable prompt platform integrated with PromptTyper. Users can browse prompts visually, search fast, add new prompts without code edits, and push content directly into automation workflow. We solved UI stability, data persistence, and integration reliability on local system. The final system is practical for day-to-day prompt management and scalable for future cloud integration."</p>
+    </div>
+
+    <div class="footer">
+      Generated on: 2026-04-01 | Document prepared for project explanation in Telugu-mix-English style with technical clarity.
+    </div>
+  </div>
+</body>
+</html>

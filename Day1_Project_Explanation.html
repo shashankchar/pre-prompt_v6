@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Day 1 - Prompt Bank Project Explanation</title>
+  <style>
+    body {
+      font-family: "Segoe UI", Tahoma, sans-serif;
+      line-height: 1.55;
+      margin: 0;
+      padding: 30px;
+      color: #111;
+      background: #fff;
+    }
+    .wrap { max-width: 900px; margin: 0 auto; }
+    h1 { margin: 0 0 6px; font-size: 32px; }
+    h2 { margin: 24px 0 8px; font-size: 22px; border-left: 4px solid #ff5a2f; padding-left: 10px; }
+    p { margin: 8px 0; }
+    .muted { color: #555; }
+    .box {
+      border: 1px solid #d9d9d9;
+      border-radius: 10px;
+      padding: 14px;
+      margin-top: 10px;
+      background: #fafafa;
+    }
+    ul, ol { margin: 6px 0 8px 20px; }
+    li { margin: 6px 0; }
+    table { width: 100%; border-collapse: collapse; margin-top: 8px; }
+    th, td { border: 1px solid #d7d7d7; padding: 9px; text-align: left; vertical-align: top; }
+    th { background: #f1f1f1; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>Day 1 - Prompt Bank Project Explanation</h1>
+    <p class="muted">Prepared for 4-day project presentation plan | Focus: Day 1 only</p>
+
+    <h2>1) Project Introduction</h2>
+    <div class="box">
+      <p><strong>Project Name:</strong> Prompt Bank + PromptTyper Integration</p>
+      <p><strong>Main Idea:</strong> Prompt templates ni Netflix-style visual platform lo manage chesi, selected prompt ni direct ga PromptTyper software ki పంపించడం.</p>
+      <p><strong>Why this project:</strong> Prompts manual ga files lo maintain cheyyadam hard. User-friendly UI + searchable library + quick reuse needed.</p>
+    </div>
+
+    <h2>2) Problem Statement</h2>
+    <div class="box">
+      <ul>
+        <li>Prompt list scattered ga untundi, fast retrieval kashtam.</li>
+        <li>Every new prompt/image kosam code edit cheyyalsi vastundi.</li>
+        <li>Existing PromptTyper app to direct workflow connection ledu.</li>
+      </ul>
+    </div>
+
+    <h2>3) Day 1 Goal (What you explain today)</h2>
+    <div class="box">
+      <ol>
+        <li>Project story and user need explain cheyyali.</li>
+        <li>UI walkthrough cheyyali (home -> search -> prompt details).</li>
+        <li>High-level architecture mention cheyyali (HTML/CSS/JS + local bridge).</li>
+        <li>Live mini demo run cheyyali.</li>
+      </ol>
+    </div>
+
+    <h2>4) UI Walkthrough Script</h2>
+    <div class="box">
+      <p><strong>Step 1:</strong> Home open chesthe cinematic intro vastundi (visual loading + intro audio behavior).</p>
+      <p><strong>Step 2:</strong> Hero slider lo featured prompts పెద్ద posters ga display avutayi; arrows & dots to navigate cheyyachu.</p>
+      <p><strong>Step 3:</strong> Left side search use chesi title/category/prompt content by keyword filter cheyyachu.</p>
+      <p><strong>Step 4:</strong> Prompt card open chesthe full prompt text, copy button, and Save to PromptTyper option vastundi.</p>
+      <p><strong>Step 5:</strong> Add Prompt ద్వారా new prompt create cheyyachu (title + prompt mandatory, image optional).</p>
+    </div>
+
+    <h2>5) High-Level Architecture (Day 1 level)</h2>
+    <div class="box">
+      <table>
+        <tr><th>Part</th><th>Role</th></tr>
+        <tr><td>Frontend</td><td>Netflix-like UI: carousel, search, prompt cards, detail page, admin add/edit form.</td></tr>
+        <tr><td>JavaScript Logic</td><td>Render data, apply filters, manage slider movement, handle prompt actions.</td></tr>
+        <tr><td>PromptTyper Bridge</td><td>Local API ద్వారా health check, prompt data load/save, prompt import.</td></tr>
+        <tr><td>Storage</td><td>Local JSON + browser localStorage for meta (pinned/favorite/recent).</td></tr>
+      </table>
+    </div>
+
+    <h2>6) Demo Checklist (Day 1)</h2>
+    <div class="box">
+      <ol>
+        <li>App open చేసి homepage చూపించు.</li>
+        <li>Slider ఒక్కసారి move చేసి dots sync చూపించు.</li>
+        <li>Search bar లో keyword ఇచ్చి filtered result చూపించు.</li>
+        <li>ఒక prompt open చేసి Copy మరియు Save to PromptTyper చూపించు.</li>
+        <li>Add Prompt screen ఓపెన్ చేసి form fields explain చేయి.</li>
+      </ol>
+    </div>
+
+    <h2>7) 2-Minute Day 1 Speaking Script</h2>
+    <div class="box">
+      <p>
+        "Our project name is Prompt Bank. We built this to manage prompts in a structured and visual way, instead of storing them randomly in text files. The homepage is designed like a streaming platform with a cinematic slider to improve discoverability. Users can search prompts by title, category, or content and open any prompt in detail view. From there, they can copy it or send it directly to PromptTyper through local integration. We also created an Add Prompt module, so new prompts can be managed without editing code every time. Today I am presenting the project overview, UI flow, and high-level architecture. In next days, I will explain deeper technical flow, API contracts, and edge case handling."
+      </p>
+    </div>
+
+    <h2>8) Common Day 1 Questions + Answers</h2>
+    <div class="box">
+      <p><strong>Q:</strong> Why Netflix-style UI?<br><strong>A:</strong> Better visual engagement and faster prompt discovery through large posters and featured highlights.</p>
+      <p><strong>Q:</strong> Is image mandatory for each prompt?<br><strong>A:</strong> No. Title + prompt text mandatory. Image optional.</p>
+      <p><strong>Q:</strong> Why PromptTyper integration?<br><strong>A:</strong> User can directly move prompt content into automation workflow without copy-paste errors.</p>
+    </div>
+
+    <p class="muted" style="margin-top: 24px;">Generated on 2026-04-01 | Day 1 focused PDF content</p>
+  </div>
+</body>
+</html>
