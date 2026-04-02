@@ -36,6 +36,14 @@ Users can search prompts, open details, and click **Save to PromptTyper** to sen
 
 ## How to Run
 
+### Easiest for normal users
+
+1. Double-click `Start_PrePrompt.bat`
+2. It tries to start PromptTyper bridge automatically
+3. It opens Prompt Bank (`index.html`)
+
+### Manual method
+
 1. Start your PromptTyper app/bridge first.
 2. Open this folder:
    - `C:\Users\LENOVO\Desktop\prompt bank`
@@ -58,4 +66,3 @@ If bridge is not running, Prompt Bank still opens with fallback data, but **Save
 - Title + Prompt are mandatory when adding records.
 - Images are optional.
 - Large base64 images can increase file size significantly.
-
