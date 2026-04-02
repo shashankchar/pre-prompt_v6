@@ -38,9 +38,10 @@ Users can search prompts, open details, and click **Save to PromptTyper** to sen
 
 ### Easiest for normal users
 
-1. Double-click `Start_PrePrompt.bat`
-2. It tries to start PromptTyper bridge automatically
+1. Double-click `PrePrompt.vbs`
+2. It auto starts bundled `bin/PromptTyper.exe` (if available)
 3. It opens Prompt Bank (`index.html`)
+4. No terminal steps required
 
 ### Manual method
 
